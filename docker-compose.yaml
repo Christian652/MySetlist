@@ -18,7 +18,7 @@ services:
   app:
     build: .
     entrypoint: ./.docker/entrypoint.dev.sh
-    container_name: crudproducts_
+    container_name: mysetlist_
     environment:
       - CHOKIDAR_USEPOLLING=true
     ports:
@@ -36,4 +36,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 173.90.234.0/24  
+        - subnet: 173.90.238.0/24  
