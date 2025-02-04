@@ -3,8 +3,7 @@ import { PrimaryGeneratedColumn, BaseEntity, Column, Entity, CreateDateColumn, O
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import { Role } from 'src/auth/enums/role.enum';
-import { Product } from 'src/product/product.entity';
-import { Storage } from 'src/storages/storages.entity';
+import { Song } from 'src/songs/song.entity';
 
 
 @Entity({name: "users"})
@@ -21,43 +20,15 @@ export class User extends BaseEntity {
   @Column()
   role: Role;
 
-  @Column({ nullable: true})
-  profile_path: string;
-
-  @Column({ nullable: true})
-  password_reset_token: string;
-
-  @Column({ type: 'timestamp', nullable: true})
-  password_reset_expires: Date;
-
-  @Column({ nullable: true})
-  confirmation_token: string;
-
-  @Column({ type: 'boolean', nullable: false, default: false })
-  confirmated: boolean;
-
   @Column()
   @Exclude({ toPlainOnly: true })
   password: string;
 
   @OneToMany(
-    () => Product,
-    product => product.author
+    () => Song,
+    song => song.author
   )
-  productsICreated: Product[];
-
-  @OneToMany(
-    () => Storage,
-    storage => storage.stocker
-  )
-  storages: Storage[];
-
-  @ManyToMany(
-    () => Product,
-    product => product.stockers,
-    { cascade: true, onDelete:"SET NULL", nullable: true}
-  )
-  productsIStock: Product[];
+  songsICreated: Song[];
 
   @CreateDateColumn()
   created_at: Date;

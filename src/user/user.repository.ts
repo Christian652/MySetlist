@@ -12,15 +12,13 @@ export class UserRepository extends Repository<User> {
   public async saveUser(
     userDto: UserDTO,
   ) {
-    const { id, name, email, password, role, profile_path } = userDto;
+    const { id, name, email, password, role} = userDto;
     
     const user = new User();
     user.id = id !== "null" ? id : null;
     user.name = name;
     user.email = email;
     user.role = role;
-
-    if (profile_path) user.profile_path = profile_path;
     
     if (password) {
       const salt = await bcrypt.genSalt(10);
@@ -34,17 +32,13 @@ export class UserRepository extends Repository<User> {
     userDto: UpdateUserDTO,
   ) {
     try {
-      const { id, name, email, password, role, profile_path } = userDto;
+      const { id, name, email, password, role } = userDto;
 
       const user = new User();
       user.id = id;
       user.name = name;
       user.email = email;
       user.role = role;
-
-      if (profile_path) {
-        user.profile_path = profile_path;
-      }
 
       if (password) {
         const salt = await bcrypt.genSalt(10);
@@ -62,12 +56,6 @@ export class UserRepository extends Repository<User> {
       .insert()
       .values(values)
       .execute();
-  }
-
-  public async getByMonth(month: number) {
-    const data = await this.find();
-
-    return data.filter(item => item.created_at.getMonth() == month)
   }
 
   public async findAll() {

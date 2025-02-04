@@ -2,7 +2,7 @@ import { Type } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsString, IsOptional, Length, IsBoolean, IsJSON, IsArray } from 'class-validator';
 import { User } from 'src/user/user.entity';
 
-export class ProductDTO {
+export class SongDTO {
     @IsOptional()
     id?: string;
 

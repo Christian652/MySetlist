@@ -21,13 +21,7 @@ export class UserDTO {
   })
   @IsEnum(Role)
   role: Role;
-
-  @IsString({
-    message: 'perfil deve ser de tipo textual!'
-  })
-  @IsOptional()
-  profile_path?: string;
-
+  
   @IsString({
     message: 'senha deve ser de tipo textual!'
   })

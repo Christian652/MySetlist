@@ -21,9 +21,5 @@ export class UpdateUserDTO {
 
   @IsString()
   @IsOptional()
-  profile_path?: string;
-
-  @IsString()
-  @IsOptional()
   password?: string;
 }

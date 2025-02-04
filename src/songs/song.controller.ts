@@ -16,61 +16,61 @@ import {
   Req,
   ParseUUIDPipe
 } from '@nestjs/common';
-import { ProductService } from './product.service';
-import { ProductDTO } from './dto/product.dto';
-import { Product } from './product.entity';
+import { SongService } from './song.service';
+import { SongDTO } from './dto/song.dto';
+import { Song } from './song.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { Role } from 'src/auth/enums/role.enum';
 import { Roles } from 'src/auth/decorators/roles.decorator'
 import { RolesGuard } from 'src/auth/roles.guard';
 
 @UseGuards(AuthGuard(), RolesGuard)
-@Controller('products')
-export class ProductController {
+@Controller('songs')
+export class SongController {
   constructor(
-    private productService: ProductService
+    private songService: SongService
   ) { }
 
   @Post()
-  @Roles(Role.Admin, Role.StockerAdmin)
+  @Roles(Role.Admin, Role.Singer)
   @UsePipes(ValidationPipe)
   public async create(
-    @Body() productDTO: ProductDTO,
+    @Body() songDTO: SongDTO,
   ): Promise<any> {
     try {
-      return await this.productService.save(productDTO);
+      return await this.songService.save(songDTO);
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @Get()
-  @Roles(Role.Admin, Role.StockerAdmin, Role.Master, Role.Stocker)
-  public async getAll(@Req() req): Promise<Product[]> {
+  @Roles(Role.Admin, Role.Singer)
+  public async getAll(@Req() req): Promise<Song[]> {
     try {
-      return await this.productService.getProducts(req.user);
+      return await this.songService.getSongs(req.user);
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @Get(":id")
-  @Roles(Role.Admin, Role.StockerAdmin, Role.Stocker, Role.Master)
+  @Roles(Role.Admin, Role.Singer)
   public async getOne(@Param("id", ParseUUIDPipe) id: string): Promise<any> {
     try {
-      return await this.productService.getOne(id);
+      return await this.songService.getOne(id);
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @Delete()
-  @Roles(Role.Admin, Role.StockerAdmin)
+  @Roles(Role.Admin, Role.Singer)
   public async delete(
     @Param("id", ParseUUIDPipe) id: string
   ): Promise<any> {
     try {
-      return await this.productService.delete(id);
+      return await this.songService.delete(id);
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }

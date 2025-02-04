@@ -30,7 +30,7 @@ export class RolesGuard implements CanActivate {
             if (decodedJwt) {
                 const user = await this.userService.findById({ id: decodedJwt['id'] });
                 if (!user) throw new HttpException('não existe usuário', 404)
-                if (user.role === Role.Stocker)
+                if (user.role === Role.Singer)
                     if (user.id !== decodedJwt['id'])
                         return false;
     

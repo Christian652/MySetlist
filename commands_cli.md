@@ -1,21 +1,21 @@
 
 ### Generate Migrations ###
-npm run typeorm:migration:generate --n create-product
+npm run typeorm:migration:generate --n create-song
 
 ### Create Migrations ###
-npm run typeorm:migration:create --n create-product
+npm run typeorm:migration:create --n create-song
 
 ### Execute Migrations ###
 npm run typeorm:migration:run
 
 ### Nest Create Module ###
-nest generate module product
+nest generate module song
 
 ### Nest Create Controller ###
-nest generate controller product --no-spec
+nest generate controller song --no-spec
 
 ### Nest Create Service ###
-nest generate service product
+nest generate service song
 
 ### Start Project Dev Mod ###
 npm run dev
