@@ -5,6 +5,7 @@ import { SongDTO } from './dto/song.dto';
 import { SongRepository } from './song.repository';
 import { User } from 'src/user/user.entity';
 import { Role } from 'src/auth/enums/role.enum';
+import { RandomSetlistDTO } from './dto/random-setlist.dto';
 
 @Injectable()
 export class SongService {
@@ -15,6 +16,25 @@ export class SongService {
 
   public async getSongs(user: User): Promise<Song[]> {
     return await this.getByAuthor(user)
+  }
+
+  public async getRandomSetlist(randomSetlistDTO: RandomSetlistDTO): Promise<Song[]> {
+    const { user, amountSongs, tonality } = randomSetlistDTO;
+    const songs = await this.getByAuthor(user);
+    const filtered = songs.filter(s => s.tonality == tonality);
+    const ids = filtered.map(s => s.id);
+    let setlist = [];
+
+    while (setlist.length < amountSongs) {
+      const randomId = Math.floor(Math.random() * ids.length) + 1;
+
+      if (!setlist.find(i => i == randomId))
+        setlist.push(randomId)
+    }
+
+    setlist = setlist.map(id => filtered.find(f => f.id == id));
+
+    return setlist;
   }
 
   public async save(
